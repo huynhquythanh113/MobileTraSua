@@ -1,11 +1,7 @@
 <?php
-  	define("DB_HOST","localhost");
-
-      define("DB_USER","id18092231_nksg");
-      define("DB_PASSWORD","Thanh@0909834037");
-      define("DB_DATABASE","id18092231_data_insert");
-      $conn=  mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_DATABASE);
-    $sql = "select * from product";
+ include "config.php";
+		
+	  $sql = "select * from products where menuId =1 order by sell desc limit 1";
     $result = mysqli_query($conn,$sql);
     
 
@@ -15,14 +11,39 @@
     while($row = mysqli_fetch_array($result)){
         $temp = array();
 
-        $temp['price'] = $row['price'];
-        $temp['image'] = $row['image'];
-        $temp['name'] = $row['name'];
+        $temp['price'] = $row['Price'];
+        $temp['image'] = $row['Image'];
+        $temp['name'] = $row['Name'];
+        $temp['id'] = $row['menuId'];
+    
+        array_push($products,$temp);
+    }
+    $sql1 = "select * from products where menuId =2 order by sell desc limit 1";
+    $result1 = mysqli_query($conn,$sql1);
 
+    while($row = mysqli_fetch_array($result1)){
+        $temp = array();
+
+        $temp['price'] = $row['Price'];
+        $temp['image'] = $row['Image'];
+        $temp['name'] = $row['Name'];
+        $temp['id'] = $row['menuId'];
+        
+        array_push($products,$temp);
+    }
+    $sql2 = "select * from products where menuId =3 order by sell desc";
+    $result2 = mysqli_query($conn,$sql2);
+
+    while($row = mysqli_fetch_array($result2)){
+        $temp = array();
+
+        $temp['price'] = $row['Price'];
+        $temp['image'] = $row['Image'];
+        $temp['name'] = $row['Name'];
+        $temp['id'] = $row['menuId'];
     
         array_push($products,$temp);
     }
     echo json_encode($products);
-
 
 ?>
